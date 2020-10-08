@@ -12,6 +12,9 @@ jobs:
     runs-on: ${{matrix.runs-on}}
     steps:
       - name: Set Env Var
-        run: cmake -E echo MY_ENV_VAR=abc >${{env.GITHUB_ENV}}
+        run: |
+          cmake -E echo MY_ENV_VAR=abc ${{env.GITHUB_ENV}}
+          cmake -E echo MY_ENV_VAR=abc $GITHUB_ENV
+          cmake -E echo MY_ENV_VAR=abc $env.GITHUB_ENV
       - name: Get Env Var
         run: cmake -E echo ${{env.MY_ENV_VAR}}
