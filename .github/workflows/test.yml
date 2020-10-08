@@ -23,7 +23,7 @@ jobs:
         run: |
           $path = vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
           cmake -E echo >> $${{env.env}}GITHUB_PATH "$(join-path $path 'VC\Tools\Llvm\bin')"
-          cmd /s /c """$(join-path $path 'Common7\Tools\vsdevcmd.bat')"" && set" >> $${{env.env}}GITHUB_ENV
+          cmd /s /c """$(join-path $path 'Common7\Tools\vsdevcmd.bat')"" > nul && set" >> $${{env.env}}GITHUB_ENV
           cmake -E echo $${{env.env}}GITHUB_PATH
           cmake -E cat $${{env.env}}GITHUB_PATH
           cmake -E echo $${{env.env}}GITHUB_ENV
