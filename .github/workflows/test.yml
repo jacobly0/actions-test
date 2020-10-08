@@ -13,10 +13,14 @@ jobs:
     steps:
       - name: Init
         if: runner.os == 'Windows'
-        run: |
-          cmake -E echo ${{env.GITHUB_ENV}}
-          cmake -E echo >> $env:GITHUB_ENV env=env:
+        run: cmake -E echo ${{env.GITHUB_ENV}}
       - name: Set Env Var
         run: cmake -E echo >> $${{env.env}}GITHUB_ENV MY_ENV_VAR=abc
       - name: Get Env Var
         run: cmake -E echo ${{env.MY_ENV_VAR}}
+      - name: Prepare Build Environment
+        if: runner.os == 'Windows'
+        run: |
+          $path = vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          cmake -E echo >> $${{env.env}}GITHUB_PATH $(join-path $path 'VC\Tools\Llvm\bin')
+          cmd /s /c """$(join-path $path 'Common7\Tools\vsdevcmd.bat')"" && set" >> $${{env.env}}GITHUB_ENV
