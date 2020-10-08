@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Init
         if: runner.os == 'Windows'
-        run: cmake -E echo ${{env.GITHUB_ENV}}
+        run: "cmake -E echo >> $env:GITHUB_ENV env=env:"
       - name: Set Env Var
         run: cmake -E echo >> $${{env.env}}GITHUB_ENV MY_ENV_VAR=abc
       - name: Get Env Var
