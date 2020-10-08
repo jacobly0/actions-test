@@ -1,0 +1,17 @@
+name: Test
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{matrix.runs-on}}
+    steps:
+      - name: Set Env Var
+        run: cmake -E echo MY_ENV_VAR=abc >${{env.GITHUB_ENV}}
+      - name: Get Env Var
+        run: cmake -E echo ${{env.MY_ENV_VAR}}
