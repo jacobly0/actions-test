@@ -9,12 +9,17 @@ jobs:
     strategy:
       matrix:
         runs-on: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            set-env: cmake -E echo >> $GITHUB_ENV
+          - os: macos-latest
+            set-env: cmake -E echo >> $GITHUB_ENV
+          - os: windows-latest
+            set-env: cmake -E echo >> $env.GITHUB_ENV
     runs-on: ${{matrix.runs-on}}
     steps:
       - name: Set Env Var
         run: |
-          cmake -E echo MY_ENV_VAR=abc ${{env.GITHUB_ENV}}
-          cmake -E echo MY_ENV_VAR=abc $GITHUB_ENV
-          cmake -E echo MY_ENV_VAR=abc $env:GITHUB_ENV
+          ${{matrix.set-env}} MY_ENV_VAR=abs
       - name: Get Env Var
         run: cmake -E echo ${{env.MY_ENV_VAR}}
