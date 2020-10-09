@@ -29,4 +29,8 @@ jobs:
           cmake -E echo $${{env.env}}GITHUB_ENV
           cmake -E cat $${{env.env}}GITHUB_ENV
       - name: Dummy
-        run: cmake -E echo $${{env.env}}PATH
+        run: |
+          cmake -E echo $${{env.env}}GITHUB_ENV
+          cmake -E echo $${{env.env}}GITHUB_PATH
+          cmake -E echo %GITHUB_ENV%
+          cmake -E echo %GITHUB_PATH%
