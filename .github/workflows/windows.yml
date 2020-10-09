@@ -12,3 +12,7 @@ jobs:
         run: echo MY_ENV_VAR=abc >> $env:GITHUB_ENV
       - name: Get Env Var
         run: echo $env:MY_ENV_VAR
+      - name: Set Path
+        run: echo C:\msys64\usr\bin >> $env:GITHUB_PATH
+      - name: Get Path
+        run: echo $env:PATH
