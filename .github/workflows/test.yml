@@ -35,6 +35,7 @@ jobs:
         uses: DuckSoft/extract-7z-action@v1.0
         with:
           pathSource: ${{steps.fasmg.outputs.file-path}}
+          pathDest: fasmg
 
       - name: Test
         if: runner.os != 'Windows'
