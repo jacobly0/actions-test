@@ -30,7 +30,7 @@ jobs:
         id: fasmg
         uses: carlosperate/download-file-action@v1.0.3
         with:
-          file-url: ${{env.href}}
+          file-url: https://flatassembler.net/${{env.href}}
       - name: Extract Fasmg
         uses: DuckSoft/extract-7z-action@v1.0
         with:
