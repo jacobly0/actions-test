@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{matrix.runs-on}}
     steps:
       - name: Bootstrap Environment
-        if: runner.os == 'Windows
+        if: runner.os == 'Windows'
         run: "cmake -E echo >> $env:GITHUB_ENV ENV=env:"
 
       - name: Download Fasmg Download Page
