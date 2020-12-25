@@ -1,0 +1,44 @@
+name: Test
+
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{matrix.runs-on}}
+    steps:
+      - name: Bootstrap Environment
+        if: runner.os == 'Windows
+        run: "cmake -E echo >> $env:GITHUB_ENV ENV=env:"
+
+      - name: Download Fasmg Download Page
+        id: flatassembler-download
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: https://flatassembler.net/download.php
+      - name: Parse Fasmg Download Page
+        id: fasmg-url
+        uses: QwerMike/xpath-action@v1
+        with:
+          filename: ${{steps.flatassembler-download.outputs.file-path}}
+          expression: //a[starts-with(text(),"flat assembler g ")]/@href
+      - name: Extract Fasmg Url
+        run: cmake -E echo >> $${{env.ENV}}GITHUB_ENV ${{steps.fasmg-url.outputs.result}}
+      - name: Download Fasmg
+        id: fasmg
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: ${{env.href}}
+      - name: Extract Fasmg
+        uses: DuckSoft/extract-7z-action@v1.0
+        with:
+          pathSource: ${{steps.fasmg.outputs.file-path}}
+
+      - name: Test
+        if: runner.os != 'Windows'
+        run: ls
+      - name: Test
+        if: runner.os == 'Windows'
+        run: dir
