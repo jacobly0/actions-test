@@ -7,4 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        run: apt search libtinfo
+        run: |
+          sudo apt update
+          apt search libtinfo
