@@ -2,13 +2,9 @@ name: Test
 
 on: push
 
-env:
-  TEST_A: foo
-  TEST_B: ${{env.TEST_A}}
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        run: echo ${{env.TEST_B}}
+        run: apt search libtinfo
