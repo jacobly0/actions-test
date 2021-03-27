@@ -1,12 +1,22 @@
 name: Test
 
-on: push
+on:
+  push:
+    branches: [master]
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{matrix.runs-on}}
     steps:
-      - name: Test
-        run: |
-          sudo apt update
-          apt search libtinfo
+      - name: Print Kernel Name
+        run: uname -s
+      - name: Print Operating System
+        run: uname -o
