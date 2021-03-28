@@ -4,13 +4,6 @@ on:
   push:
     branches: [main]
 
-defaults:
-  run:
-    shell: bash
-
-env:
-  FASMG_DOMAIN: https://flatassembler.net
-
 jobs:
   test:
     strategy:
@@ -19,16 +12,5 @@ jobs:
         runs-on: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{matrix.runs-on}}
     steps:
-      - name: Download Fasmg Download Page
-        id: fasmg-download
-        uses: carlosperate/download-file-action@v1.0.3
-        with:
-          file-url: ${{env.FASMG_DOMAIN}}/download.php
-      - name: Parse Fasmg Download Page
-        id: fasmg-url
-        uses: QwerMike/xpath-action@v1
-        with:
-          filename: ${{steps.fasmg-download.outputs.file-path}}
-          expression: string(//a[starts-with(text(),"flat assembler g ")]/@href)
-      - name: Check Fasmg
-        run: echo ${{steps.fasmg-url.outputs.result}}
+      - name: Test File
+        run: file -Lb x
