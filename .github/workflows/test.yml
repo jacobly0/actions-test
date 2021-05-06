@@ -14,7 +14,16 @@ jobs:
     steps:
       - name: Package Disk Usage
         if: always() && runner.os == 'Linux'
-        run: dpkg-query -W --show-format='${Installed-Size}\t${Package}\n' | sort -n
+        run: dpkg-query -W --showformat='${Installed-Size}\t${Package}\n' | sort -n
+      - name: Disk Usage
+        if: always() && runner.os != 'Windows'
+        run: df -h
+      - name: Disk Usage
+        if: always() && runner.os == 'Windows'
+        run: wmic logicaldisk get size,freespace,caption
+      - name: Uninstall Unused Packages
+        if: always() && runner.os == 'Linux'
+        run: sudo apt-get remove ^ghc-[0-9.]+$ azure-cli google-cloud-sdk
       - name: Disk Usage
         if: always() && runner.os != 'Windows'
         run: df -h
