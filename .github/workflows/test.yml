@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Install Packages
         if: always() && runner.os == 'Linux'
-        run: apt-get install wajig
+        run: sudo apt-get install wajig
       - name: Package Disk Usage
         if: always() && runner.os == 'Linux'
         run: wajig large 
