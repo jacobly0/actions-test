@@ -12,5 +12,9 @@ jobs:
         runs-on: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{matrix.runs-on}}
     steps:
-      - name: Test File
-        run: file -Lb x
+      - name: Disk Usage
+        if: always() && runner.os != 'Windows'
+        run: df -h
+      - name: Disk Usage
+        if: always() && runner.os == 'Windows'
+        run: wmic logicaldisk get size,freespace,caption
