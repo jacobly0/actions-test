@@ -12,6 +12,12 @@ jobs:
         runs-on: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{matrix.runs-on}}
     steps:
+      - name: Install Packages
+        if: always() && runner.os == 'Linux'
+        run: apt-get install wajig
+      - name: Package Disk Usage
+        if: always() && runner.os == 'Linux'
+        run: wajig large 
       - name: Disk Usage
         if: always() && runner.os != 'Windows'
         run: df -h
