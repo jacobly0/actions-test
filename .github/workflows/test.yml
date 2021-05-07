@@ -8,6 +8,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Default LLD Version
+        run: ld.lld --version
       - name: Package Disk Usage
         run: dpkg-query -W --showformat='${Installed-Size}\t${Package}\n' | sort -n
       - name: Disk Usage
