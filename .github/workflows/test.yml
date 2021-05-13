@@ -8,13 +8,5 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Default LLD Version
-        run: ld.lld-11 --version
-      - name: Package Disk Usage
-        run: dpkg-query -W --showformat='${Installed-Size}\t${Package}\n' | sort -n
-      - name: Disk Usage
-        run: df
-      - name: Uninstall Unused Packages
-        run: sudo apt-get remove ^ghc-[0-9.]+$ azure-cli google-cloud-sdk ^adoptopenjdk-[0-9]+-hotspot$ hhvm libgl1-mesa-dri ^google-chrome.*$ ^dotnet-sdk-[0-9.]+$ firefox
-      - name: Disk Usage
-        run: df
+      - name: Test
+        run: echo test
